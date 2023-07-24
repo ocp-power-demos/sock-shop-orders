@@ -55,9 +55,9 @@ public class AsyncGetService {
     public <T> Future<Resource<T>> getResource(URI url, TypeReferences.ResourceType<T> type) throws
             InterruptedException, IOException {
         RequestEntity<Void> request = RequestEntity.get(url).accept(HAL_JSON).build();
-        LOG.debug("Requesting: " + request.toString());
+        LOG.info("Requesting: " + request.toString());
         Resource<T> body = restProxyTemplate.getRestTemplate().exchange(request, type).getBody();
-        LOG.debug("Received: " + body.toString());
+        LOG.info("Received: " + body.toString());
         return new AsyncResult<>(body);
     }
 
