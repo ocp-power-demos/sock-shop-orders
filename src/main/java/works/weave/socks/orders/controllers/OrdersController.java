@@ -58,20 +58,23 @@ public class OrdersController {
             }
 
 
-            LOG.debug("Starting calls");
+            LOG.info("Starting calls addressFuture");
             Future<Resource<Address>> addressFuture = asyncGetService.getResource(item.address, new TypeReferences
                     .ResourceType<Address>() {
             });
+            LOG.info("Starting calls customerFuture");
             Future<Resource<Customer>> customerFuture = asyncGetService.getResource(item.customer, new TypeReferences
                     .ResourceType<Customer>() {
             });
+            LOG.info("Starting calls cardFuture");
             Future<Resource<Card>> cardFuture = asyncGetService.getResource(item.card, new TypeReferences
                     .ResourceType<Card>() {
             });
+            LOG.info("Starting calls itemsFuture");
             Future<List<Item>> itemsFuture = asyncGetService.getDataList(item.items, new
                     ParameterizedTypeReference<List<Item>>() {
             });
-            LOG.debug("End of calls.");
+            LOG.info("End of calls.");
 
             float amount = calculateTotal(itemsFuture.get(timeout, TimeUnit.SECONDS));
 

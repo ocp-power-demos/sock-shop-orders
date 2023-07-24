@@ -56,6 +56,7 @@ public class AsyncGetService {
             InterruptedException, IOException {
         RequestEntity<Void> request = RequestEntity.get(url).accept(HAL_JSON).build();
         LOG.info("Requesting: " + request.toString());
+        LOG.info("Requesting with type: " + type.toString());
         Resource<T> body = restProxyTemplate.getRestTemplate().exchange(request, type).getBody();
         LOG.info("Received: " + body.toString());
         return new AsyncResult<>(body);
