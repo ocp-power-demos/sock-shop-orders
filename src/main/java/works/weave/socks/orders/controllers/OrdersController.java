@@ -77,12 +77,14 @@ public class OrdersController {
             LOG.info("End of calls.");
 
             float amount = calculateTotal(itemsFuture.get(timeout, TimeUnit.SECONDS));
-
+            Address ar = addressFuture.get(timeout, TimeUnit.SECONDS).getContent();
+            Card cr = cardFuture.get(timeout, TimeUnit.SECONDS).getContent();
+            Customer c = customerFuture.get(timeout, TimeUnit.SECONDS).getContent();
             // Call payment service to make sure they've paid
             PaymentRequest paymentRequest = new PaymentRequest(
-                    addressFuture.get(timeout, TimeUnit.SECONDS).getContent(),
-                    cardFuture.get(timeout, TimeUnit.SECONDS).getContent(),
-                    customerFuture.get(timeout, TimeUnit.SECONDS).getContent(),
+                    ar,
+                    cr,
+                    c,
                     amount);
             LOG.info("Sending payment request: " + paymentRequest);
             Future<PaymentResponse> paymentFuture = asyncGetService.postResource(
